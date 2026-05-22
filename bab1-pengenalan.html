@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materi — Arsitek Sarungan</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  
+  <style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d0f14; --surface: #151820; --surface2: #1c2030;
+    --border: #252a3a; --accent: #f0a500; --accent2: #e05c00;
+    --text: #eef0f6; --muted: #8a90a8; --free: #16a34a;
+    --radius: 12px; --font: 'Plus Jakarta Sans', sans-serif; --font-display: 'Fraunces', serif;
+  }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  nav {
+    background: rgba(13,15,20,0.95); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border); padding: 0 20px; height: 56px;
+    display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100;
+  }
+  .back-btn {
+    background: var(--surface2); border: 1px solid var(--border); color: var(--muted);
+    width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; font-size: 1.1rem; text-decoration: none;
+    transition: background 0.15s, color 0.15s; flex-shrink: 0;
+  }
+  .back-btn:hover { background: var(--border); color: var(--text); }
+  .nav-title { font-size: 0.88rem; font-weight: 600; color: var(--text); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nav-brand { font-family: var(--font-display); font-size: 1rem; color: var(--accent); font-weight: 700; margin-left: auto; flex-shrink: 0; }
+
+  .content-wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  /* Breadcrumb */
+  .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--muted); margin-bottom: 20px; flex-wrap: wrap; }
+  .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb span { color: var(--border); }
+  .breadcrumb .current { color: var(--text); }
+
+  /* Lesson header */
+  .lesson-header { margin-bottom: 28px; }
+  .lesson-bab-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(240,165,0,0.1); border: 1px solid rgba(240,165,0,0.25);
+    color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 4px 12px; border-radius: 999px; margin-bottom: 12px;
+  }
+  .lesson-title {
+    font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem);
+    font-weight: 700; color: #fff; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 12px;
+  }
+  .lesson-meta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .lesson-meta-item { display: flex; align-items: center; gap: 5px; font-size: 0.8rem; color: var(--muted); }
+
+  /* Video player */
+  .video-container {
+    position: relative; width: 100%; aspect-ratio: 16/9;
+    background: #0a0c10; border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--border); margin-bottom: 28px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .video-placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; color: var(--muted); text-align: center; padding: 20px;
+  }
+  .play-circle {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; cursor: pointer; transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 0 40px rgba(240,165,0,0.3);
+  }
+  .play-circle:hover { transform: scale(1.08); opacity: 0.9; }
+  .video-placeholder h3 { font-size: 1rem; color: var(--text); font-family: var(--font-display); }
+  .video-placeholder p { font-size: 0.82rem; max-width: 300px; }
+
+  /* Lesson content card */
+  .content-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 20px;
+  }
+  .content-card h2 { font-family: var(--font-display); font-size: 1.15rem; color: #fff; margin-bottom: 16px; }
+  .content-card p { font-size: 0.9rem; color: #c5c9da; line-height: 1.8; margin-bottom: 12px; }
+  .content-card ul { padding-left: 20px; }
+  .content-card li { font-size: 0.9rem; color: #c5c9da; line-height: 1.8; margin-bottom: 6px; }
+  .content-card strong { color: var(--accent); }
+  .content-card h3 { font-size: 0.95rem; color: #fff; margin: 20px 0 8px; font-weight: 700; }
+
+  /* File download card */
+  .file-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 18px 20px; display: flex; align-items: center; gap: 14px; margin-bottom: 12px;
+    transition: border-color 0.2s; cursor: pointer;
+  }
+  .file-card:hover { border-color: rgba(240,165,0,0.4); }
+  .file-card-icon { font-size: 2rem; flex-shrink: 0; }
+  .file-card-info { flex: 1; }
+  .file-card-name { font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 3px; }
+  .file-card-desc { font-size: 0.75rem; color: var(--muted); }
+  .file-card-btn {
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    color: #fff; font-family: var(--font); font-size: 0.78rem; font-weight: 700;
+    padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; flex-shrink: 0;
+  }
+
+  /* Navigation between lessons */
+  .lesson-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+  .lesson-nav-btn {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 14px 16px; cursor: pointer; transition: border-color 0.2s, background 0.15s;
+    text-decoration: none; display: flex; align-items: center; gap: 10px;
+  }
+  .lesson-nav-btn:hover { border-color: rgba(240,165,0,0.4); background: rgba(240,165,0,0.03); }
+  .lesson-nav-btn.prev { justify-content: flex-start; }
+  .lesson-nav-btn.next { justify-content: flex-end; text-align: right; }
+  .lesson-nav-btn.disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+  .nav-arrow { font-size: 1.2rem; color: var(--accent); flex-shrink: 0; }
+  .nav-btn-label { font-size: 0.7rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .nav-btn-name { font-size: 0.82rem; color: #fff; font-weight: 600; margin-top: 2px; line-height: 1.3; }
+
+  /* Sidebar chapters (desktop) */
+  @media (min-width: 900px) {
+    .layout { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start; }
+    .sidebar { position: sticky; top: 72px; }
+  }
+  .sidebar-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .sidebar-head { padding: 14px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); font-size: 0.85rem; font-weight: 700; color: #fff; }
+  .sidebar-lesson {
+    display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+    font-size: 0.8rem; color: var(--muted); border-bottom: 1px solid rgba(37,42,58,0.5);
+    cursor: pointer; transition: background 0.15s; text-decoration: none;
+  }
+  .sidebar-lesson:last-child { border-bottom: none; }
+  .sidebar-lesson:hover { background: rgba(255,255,255,0.03); color: var(--text); }
+  .sidebar-lesson.active { background: rgba(240,165,0,0.07); color: var(--accent); }
+  .sidebar-lesson.locked { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .sidebar-num { width: 22px; height: 22px; border-radius: 6px; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; border: 1px solid var(--border); }
+  .sidebar-lesson.active .sidebar-num { background: rgba(240,165,0,0.15); border-color: rgba(240,165,0,0.3); color: var(--accent); }
+  .sidebar-lesson-name { flex: 1; line-height: 1.3; }
+
+  .progress-bar-wrap { padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+  .progress-label { font-size: 0.72rem; color: var(--muted); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .progress-bar { height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 99px; transition: width 0.4s; }
+
+  
+  </style>
+  
+  
+</head>
+<body>
+
+<nav>
+  <a class="back-btn" href="index.html" title="Kembali ke Course">‹</a>
+  <div class="nav-title" id="navTitle">Memuat materi...</div>
+  <span class="nav-brand">AS</span>
+</nav>
+
+<div class="content-wrap">
+  <div class="breadcrumb" id="breadcrumb">
+    <a href="index.html">Kursus</a>
+    <span>›</span>
+    <span class="current" id="bcBab">—</span>
+    <span>›</span>
+    <span class="current" id="bcLesson">—</span>
+  </div>
+
+  <div class="layout">
+    <div id="mainContent">
+      <div class="lesson-header">
+        <div class="lesson-bab-tag" id="babTag">BAB —</div>
+        <h1 class="lesson-title" id="lessonTitle">Memuat...</h1>
+        <div class="lesson-meta" id="lessonMeta"></div>
+      </div>
+
+      <div id="lessonBody"></div>
+      
+<script>
+// Same chapter data from main page
+const chapters = [
+  {
+    id: 1, title: "BAB 1 — Apa yang kamu dapat dari metode otomatisasi?", price: 0,
+    lessons: [
+      { slug: "bab1-pengenalan", name: "Pentingnya menguasai metode ini", type: "📖", typeLabel: "Bacaan", free: true,
+        content: {
+          type: "reading",
+          description: "Bacaan · ~5 menit",
+          body: `
+            <h2>Pentingnya Menguasai Metode Otomatisasi</h2>
+            <p>Selamat datang di kursus <strong>Otomatisasi SketchUp 10x Lebih Cepat dan Detail</strong>! Di BAB pertama ini, kamu akan memahami kenapa metode otomatisasi adalah game-changer bagi seorang arsitek dan desainer.</p>
+            <h3>Mengapa Manual Itu Membuang Waktu?</h3>
+            <p>Cara konvensional mendesain di SketchUp membutuhkan pengulangan yang sangat banyak. Setiap dinding, setiap kolom, setiap tangga — semuanya harus digambar satu per satu. Ini menghabiskan 80–90% waktu kamu hanya untuk hal-hal repetitif.</p>
+            <ul>
+              <li>Membuat dinding 1 lantai secara manual: <strong>2–3 jam</strong></li>
+              <li>Dengan metode otomatisasi: <strong>10–15 menit</strong></li>
+              <li>Efisiensi waktu: lebih dari <strong>90%</strong></li>
+            </ul>
+            <h3>Apa yang Akan Kamu Pelajari?</h3>
+            <p>Dalam 11 BAB ke depan, kamu akan menguasai cara mengotomatisasi setiap elemen bangunan — dari dinding, struktur, pondasi, lantai, pintu & jendela, tangga, plafond, atap, hingga gambar kerja DED (Detail Engineering Drawing).</p>
+            <h3>Siapkan Dirimu</h3>
+            <p>Pastikan kamu sudah menginstall SketchUp Pro (versi 2021 atau lebih baru). Semua file dan tools eksklusif akan tersedia di setiap BAB. Mulailah dari BAB 2 dan ikuti urutan materinya untuk hasil terbaik.</p>
+          `
+        }
+      }
+    ]
+  },
+  {
+    id: 2, title: "BAB 2 — Otomatisasi Dinding", price: 75000,
+    lessons: [
+      { slug: "videobab2.html", name: "Overview otomatisasi dinding", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 8 menit", videoTitle: "Overview: Otomatisasi Dinding di SketchUp" }},
+      { slug: "bab2-plugin", name: "Exclusive tools (Plugin Eksklusif)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "WallAutomate_v2.rbz", fileDesc: "Plugin SketchUp untuk otomatisasi dinding. Install melalui Extensions > Install Extension.", fileSize: "2.4 MB" }},
+      { slug: "bab2-file-pendukung", name: "File pendukung Eksklusif", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab2_Template_Dinding.skp", fileDesc: "Template SketchUp dengan konfigurasi dinding siap pakai.", fileSize: "8.1 MB" }},
+      { slug: "bab2-generic", name: "Otomatisasi dinding generic", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 12 menit", videoTitle: "Otomatisasi Dinding Generic" }},
+      { slug: "bab2-anotasi", name: "Otomatisasi dinding dengan anotasi", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 15 menit", videoTitle: "Dinding dengan Anotasi Otomatis" }},
+      { slug: "bab2-detail", name: "Otomatisasi dinding dengan detail lanjutan", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 18 menit", videoTitle: "Detail Lanjutan: Lapisan & Material Dinding" }},
+      { slug: "bab2-kompleks", name: "Otomatisasi dinding kompleks", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 20 menit", videoTitle: "Dinding Kompleks: Sudut & Pertemuan" }},
+      { slug: "bab2-modifikasi", name: "Modifikasi dinding", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 10 menit", videoTitle: "Cara Memodifikasi Dinding yang Sudah Jadi" }},
+      { slug: "bab2-autotag", name: "Memanfaatkan auto tag sebagai layer dinding", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 9 menit", videoTitle: "Auto Tag sebagai Layer Manajemen Dinding" }},
+      { slug: "bab2-save-assembly", name: "Kapan waktu yang tepat untuk save assembly?", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 7 menit", videoTitle: "Tips: Save Assembly untuk Efisiensi Workflow" }},
+      { slug: "bab2-custom", name: "Dinding dengan bentuk custom", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 16 menit", videoTitle: "Otomatisasi Dinding Bentuk Custom & Non-Rectangular" }},
+    ]
+  },
+  {
+    id: 3, title: "BAB 3 — Otomatisasi Struktur", price: 75000,
+    lessons: [
+      { slug: "bab3-overview", name: "Overview Otomatisasi Struktur", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 9 menit", videoTitle: "Overview: Otomatisasi Struktur Bangunan" }},
+      { slug: "bab3-file-struktur", name: "Exclusive files (otomatisasi modelling struktur)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab3_Struktur_Complete.zip", fileDesc: "Paket file otomatisasi modelling struktur lengkap.", fileSize: "15.3 MB" }},
+      { slug: "bab3-modelling-cepat", name: "Otomatisasi Modelling struktur secara cepat", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 22 menit", videoTitle: "Modelling Struktur Cepat dengan Otomatisasi" }},
+      { slug: "bab3-tabrakan", name: "Otomatisasi penyesuaian struktur yang bertabrakan", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 14 menit", videoTitle: "Resolusi Tabrakan Struktur Otomatis" }},
+      { slug: "bab3-modifikasi", name: "Modifikasi struktur yang telah terbuat", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 11 menit", videoTitle: "Modifikasi Struktur Existing" }},
+      { slug: "bab3-dinding-struktur", name: "Menyesuaikan dinding pada struktur", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 13 menit", videoTitle: "Sinkronisasi Dinding & Struktur" }},
+      { slug: "bab3-ext-pendetailan", name: "Exclusive Extension (tools pendetailan struktur)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "StructDetail_Extension.rbz", fileDesc: "Extension SketchUp untuk pendetailan struktur bangunan.", fileSize: "3.8 MB" }},
+      { slug: "bab3-detail-kolom", name: "Otomatisasi detail kolom", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 17 menit", videoTitle: "Detail Kolom: Tulangan & Dimensi Otomatis" }},
+      { slug: "bab3-detail-sloof", name: "Otomatisasi detail sloof", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 15 menit", videoTitle: "Detail Sloof Otomatis" }},
+      { slug: "bab3-detail-balok", name: "Otomatisasi detail balok menerus", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 19 menit", videoTitle: "Detail Balok Menerus Otomatis" }},
+      { slug: "bab3-ded-3d", name: "Otomatisasi DED struktur dari 3D model", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 24 menit", videoTitle: "Generate DED Struktur dari 3D Model" }},
+    ]
+  },
+  {
+    id: 4, title: "BAB 4 — Otomatisasi Pondasi", price: 60000,
+    lessons: [
+      { slug: "bab4-overview", name: "Overview otomatisasi pondasi", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 7 menit", videoTitle: "Overview: Otomatisasi Pondasi" }},
+      { slug: "bab4-file-pondasi", name: "Exclusive file (File otomatisasi pondasi)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab4_Pondasi_Auto.skp", fileDesc: "File template otomatisasi pondasi batu kali & footplate.", fileSize: "6.7 MB" }},
+      { slug: "bab4-batu-kali", name: "Otomatisasi pondasi batu kali", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 16 menit", videoTitle: "Pondasi Batu Kali Otomatis" }},
+      { slug: "bab4-footplate", name: "Otomatisasi pondasi footplate", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 18 menit", videoTitle: "Pondasi Footplate dengan Tulangan Otomatis" }},
+      { slug: "bab4-modelling-tanah", name: "Exclusive tools (Modelling tanah detail)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "SoilModel_Tool.rbz", fileDesc: "Tools untuk modelling kontur tanah secara detail dan cepat.", fileSize: "2.1 MB" }},
+      { slug: "bab4-tanah-detail", name: "Modelling struktur tanah detail dan cepat", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 14 menit", videoTitle: "Modelling Tanah Detail & Realistis" }},
+    ]
+  },
+  {
+    id: 5, title: "BAB 5 — Otomatisasi Lantai Detail", price: 55000,
+    lessons: [
+      { slug: "bab5-overview", name: "Overview otomatisasi modelling lantai detail", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 6 menit", videoTitle: "Overview: Otomatisasi Lantai Detail" }},
+      { slug: "bab5-tools-lantai", name: "Exclusive tools (otomatisasi lapisan lantai & pola)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "FloorAuto_Tools.zip", fileDesc: "Tools lengkap untuk otomatisasi lapisan lantai dan pola keramik.", fileSize: "5.2 MB" }},
+      { slug: "bab5-lapisan", name: "Otomatisasi detail lapisan lantai", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 13 menit", videoTitle: "Detail Lapisan Lantai: Screed, Keramik, Granit" }},
+      { slug: "bab5-keramik", name: "Otomatisasi pola keramik", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 11 menit", videoTitle: "Pola Keramik Otomatis: Grid, Diagonal, Herringbone" }},
+      { slug: "bab5-paving", name: "Otomatisasi pola paving", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 10 menit", videoTitle: "Otomatisasi Pola Paving Eksterior" }},
+    ]
+  },
+  {
+    id: 6, title: "BAB 6 — Otomatisasi Bukaan (Pintu & Jendela)", price: 75000,
+    lessons: [
+      { slug: "bab6-overview", name: "Overview otomatisasi bukaan", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 8 menit", videoTitle: "Overview: Otomatisasi Bukaan Pintu & Jendela" }},
+      { slug: "bab6-tools-bukaan", name: "Exclusive tools (Bukaan dinding otomatis)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "OpeningAuto.rbz", fileDesc: "Plugin untuk membuat bukaan dinding secara otomatis.", fileSize: "1.9 MB" }},
+      { slug: "bab6-pintu-jendela", name: "Otomatisasi bukaan pintu dan jendela", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 14 menit", videoTitle: "Bukaan Pintu & Jendela Otomatis" }},
+      { slug: "bab6-anotasi-pj", name: "Exclusive files (Anotasi pintu & jendela auto resized)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab6_Anotasi_PintuJendela.skp", fileDesc: "File anotasi pintu & jendela yang auto resize sesuai ukuran.", fileSize: "4.5 MB" }},
+      { slug: "bab6-gambar-kerja-pj", name: "Anotasi gambar kerja pintu & jendela", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 16 menit", videoTitle: "Anotasi Gambar Kerja Pintu & Jendela" }},
+      { slug: "bab6-pintu-3d", name: "Exclusive files (Pintu 3D lengkap dengan 2D)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab6_Door3D_2D_Library.skp", fileDesc: "Librari pintu 3D lengkap dengan tampilan 2D untuk gambar kerja.", fileSize: "12.3 MB" }},
+      { slug: "bab6-otomatis-3d", name: "Otomatisasi pintu 3D lengkap dengan 2D sekaligus", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 18 menit", videoTitle: "Pintu 3D & 2D Sekaligus dalam Satu Langkah" }},
+      { slug: "bab6-drag-drop", name: "Pintu jendela hanya dengan drag & drop", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 12 menit", videoTitle: "Drag & Drop: Cara Tercepat Memasang Pintu Jendela" }},
+    ]
+  },
+  {
+    id: 7, title: "BAB 7 — Otomatisasi Tangga", price: 60000,
+    lessons: [
+      { slug: "bab7-overview", name: "Overview otomatisasi modelling tangga", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 7 menit", videoTitle: "Overview: Otomatisasi Tangga" }},
+      { slug: "bab7-file-tangga", name: "Exclusive files (tangga otomatis menyesuaikan ukuran)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab7_StairAuto.skp", fileDesc: "Template tangga yang otomatis menyesuaikan tinggi & lebar antar lantai.", fileSize: "7.8 MB" }},
+      { slug: "bab7-ukuran", name: "Tangga otomatis menyesuaikan ukuran", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 15 menit", videoTitle: "Tangga Dinamis yang Menyesuaikan Ukuran Otomatis" }},
+      { slug: "bab7-tools-tangga", name: "Exclusive tools (otomatisasi modelling tangga)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "StairBuilder_Plugin.rbz", fileDesc: "Plugin untuk membangun tangga secara otomatis dengan berbagai konfigurasi.", fileSize: "3.2 MB" }},
+      { slug: "bab7-custom", name: "Otomatisasi tangga custom", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 19 menit", videoTitle: "Tangga Custom: L-Shape, U-Shape, dan Spiral" }},
+    ]
+  },
+  {
+    id: 8, title: "BAB 8 — Otomatisasi Plafond", price: 55000,
+    lessons: [
+      { slug: "bab8-overview", name: "Overview otomatisasi plafond", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 6 menit", videoTitle: "Overview: Otomatisasi Plafond" }},
+      { slug: "bab8-file-plafon", name: "Exclusive file (otomatisasi rangka plafon)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab8_CeilingAuto.skp", fileDesc: "File otomatisasi rangka plafon metal furing dan kayu.", fileSize: "9.1 MB" }},
+      { slug: "bab8-rangka", name: "Otomatisasi rangka plafon detail", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 17 menit", videoTitle: "Rangka Plafon Detail: Metal Furing & Kayu" }},
+      { slug: "bab8-panel", name: "Otomatisasi panel plafon", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 14 menit", videoTitle: "Panel Plafon: Gypsum, GRC, Kayu" }},
+    ]
+  },
+  {
+    id: 9, title: "BAB 9 — Otomatisasi Atap", price: 70000,
+    lessons: [
+      { slug: "bab9-overview", name: "Overview otomatisasi atap", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 8 menit", videoTitle: "Overview: Otomatisasi Sistem Atap" }},
+      { slug: "bab9-tools-kuda", name: "Exclusive tools (Otomatisasi rangka kuda kuda)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "RoofTruss_Auto.rbz", fileDesc: "Plugin otomatisasi rangka kuda-kuda atap.", fileSize: "4.1 MB" }},
+      { slug: "bab9-kuda-kuda", name: "Otomatisasi rangka kuda kuda", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 20 menit", videoTitle: "Rangka Kuda-Kuda Otomatis" }},
+      { slug: "bab9-file-reng", name: "Exclusive file (otomatisasi rangka reng atap)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab9_RengAtap_Auto.skp", fileDesc: "File otomatisasi rangka reng atap sesuai jenis genteng.", fileSize: "6.4 MB" }},
+      { slug: "bab9-reng", name: "Otomatisasi rangka reng atap", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 15 menit", videoTitle: "Rangka Reng Atap Otomatis" }},
+      { slug: "bab9-file-genteng", name: "Exclusive file Otomatisasi genteng detail realistis", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab9_Genteng_Realistic.skp", fileDesc: "Librari genteng realistis siap pakai — beton, tanah liat, metal.", fileSize: "18.5 MB" }},
+      { slug: "bab9-genteng", name: "Otomatisasi genting detail realistis", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 22 menit", videoTitle: "Genteng Detail Realistis Otomatis" }},
+    ]
+  },
+  {
+    id: 10, title: "BAB 10 — Otomatisasi DED dari 3D Model", price: 70000,
+    lessons: [
+      { slug: "bab10-file-ded", name: "Exclusive tools & files (otomatisasi gambar kerja)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "Bab10_DED_AutoTools.zip", fileDesc: "Paket lengkap tools & files untuk otomatisasi gambar kerja DED.", fileSize: "22.7 MB" }},
+      { slug: "bab10-overview", name: "Overview otomatisasi DED gambar kerja dari 3D model", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 10 menit", videoTitle: "Overview: Generate DED dari 3D Model" }},
+      { slug: "bab10-denah", name: "Otomatisasi denah dari 3D lengkap dengan anotasi", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 25 menit", videoTitle: "Denah Otomatis dari 3D + Anotasi Lengkap" }},
+      { slug: "bab10-potongan", name: "Otomatisasi potongan dari 3D lengkap dengan anotasi", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 23 menit", videoTitle: "Potongan Otomatis dari 3D + Anotasi" }},
+    ]
+  },
+  {
+    id: 11, title: "BAB 11 — Otomatisasi Dimensi Gambar Kerja / DED", price: 65000,
+    lessons: [
+      { slug: "bab11-overview", name: "Overview otomatisasi dimensi gambar kerja", type: "🎬", typeLabel: "Video", preview: true,
+        content: { type: "video", description: "Video Preview · 7 menit", videoTitle: "Overview: Otomatisasi Dimensi Gambar Kerja" }},
+      { slug: "bab11-tools-dimensi", name: "Exclusive tools (otomatisasi dimensi gambar kerja)", type: "📁", typeLabel: "File",
+        content: { type: "file", fileName: "DimAuto_Tools.rbz", fileDesc: "Plugin untuk pemberian dimensi gambar kerja secara otomatis.", fileSize: "2.8 MB" }},
+      { slug: "bab11-denah", name: "Otomatisasi dimensi denah", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 18 menit", videoTitle: "Dimensi Denah Otomatis" }},
+      { slug: "bab11-elevasi", name: "Otomatisasi dimensi elevasi potongan", type: "🎬", typeLabel: "Video",
+        content: { type: "video", description: "Video · 16 menit", videoTitle: "Dimensi Elevasi & Potongan Otomatis" }},
+    ]
+  }
+];
+
+// ─── UNLOCK STATE ──────────────────────────────────────────────
+function getUnlocked() {
+  try { return JSON.parse(sessionStorage.getItem('unlocked') || '[]'); } catch(e) { return []; }
+}
+function isUnlocked(chapId) {
+  const u = getUnlocked();
+  return chapId === 1 || u.includes('full') || u.includes(chapId);
+}
+
+// ─── PARSE URL ─────────────────────────────────────────────────
+const params = new URLSearchParams(window.location.search);
+const babId = parseInt(params.get('bab')) || 1;
+const slug = params.get('slug') || '';
+
+const chapter = chapters.find(c => c.id === babId);
+const lessonIndex = chapter ? chapter.lessons.findIndex(l => l.slug === slug) : 0;
+const lesson = chapter ? chapter.lessons[lessonIndex >= 0 ? lessonIndex : 0] : null;
+
+// ─── RENDER PAGE ───────────────────────────────────────────────
+function renderPage() {
+  if (!chapter || !lesson) {
+    document.getElementById('lessonTitle').textContent = 'Materi tidak ditemukan';
+    return;
+  }
+
+  const unlocked = isUnlocked(babId);
+
+  // Nav + breadcrumb
+  document.title = `${lesson.name} — Arsitek Sarungan`;
+  document.getElementById('navTitle').textContent = lesson.name;
+  document.getElementById('bcBab').textContent = chapter.title;
+  document.getElementById('bcLesson').textContent = lesson.name;
+
+  // Header
+  document.getElementById('babTag').textContent = `BAB ${babId}`;
+  document.getElementById('lessonTitle').textContent = lesson.name;
+  document.getElementById('lessonMeta').innerHTML = `
+    <div class="lesson-meta-item">${lesson.type} ${lesson.typeLabel}</div>
+    ${lesson.content ? `<div class="lesson-meta-item">· ${lesson.content.description || ''}</div>` : ''}
+  `;
+
+  // Body content
+  renderLessonBody(lesson, unlocked);
+
+  // Prev / Next
+  renderNavigation(chapter, lessonIndex, unlocked);
+
+  // Sidebar
+  renderSidebar(chapter, lessonIndex, unlocked);
+}
+
+function renderLessonBody(lesson, unlocked) {
+  const body = document.getElementById('lessonBody');
+  const c = lesson.content;
+  if (!c) { body.innerHTML = '<div class="content-card"><p>Konten sedang disiapkan.</p></div>'; return; }
+
+  if (c.type === 'video') {
+    body.innerHTML = `
+      <div class="video-container">
+        <div class="video-placeholder">
+          <div class="play-circle">▶</div>
+          <h3>${c.videoTitle}</h3>
+          <p>${c.description}</p>
+          <p style="font-size:0.75rem;color:var(--muted);margin-top:4px">Video akan tersedia setelah integrasi platform video</p>
+        </div>
+      </div>
+      <div class="content-card">
+        <h2>Tentang Materi Ini</h2>
+        <p>Materi video ini adalah bagian dari <strong>${chapter.title}</strong>. Ikuti langkah-langkah yang ditunjukkan di video untuk hasil terbaik.</p>
+        <p>Pastikan kamu sudah mendownload semua file eksklusif di BAB ini sebelum memulai praktik.</p>
+      </div>
+    `;
+  } else if (c.type === 'file') {
+    body.innerHTML = `
+      <div class="content-card">
+        <h2>📁 File Eksklusif</h2>
+        <p>File ini adalah bagian dari materi <strong>${chapter.title}</strong>. Simpan dan gunakan sesuai instruksi di video.</p>
+      </div>
+      <div class="file-card" onclick="downloadFile()">
+        <div class="file-card-icon">📦</div>
+        <div class="file-card-info">
+          <div class="file-card-name">${c.fileName}</div>
+          <div class="file-card-desc">${c.fileDesc}</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:4px">Ukuran: ${c.fileSize}</div>
+        </div>
+        <button class="file-card-btn" onclick="downloadFile()">⬇ Unduh</button>
+      </div>
+      <div class="content-card" style="margin-top:12px">
+        <h2>Cara Menggunakan File</h2>
+        <ul>
+          <li>Extract file zip (jika format .zip) ke folder project kamu</li>
+          <li>Untuk file .rbz: buka SketchUp → Extensions → Install Extension → pilih file .rbz</li>
+          <li>Untuk file .skp: buka langsung di SketchUp sebagai template atau referensi</li>
+          <li>Ikuti instruksi lebih detail di video materi yang berkaitan</li>
+        </ul>
+      </div>
+    `;
+  } else if (c.type === 'reading') {
+    body.innerHTML = `<div class="content-card">${c.body}</div>`;
+  }
+}
+
+function renderNavigation(chapter, currentIdx, unlocked) {
+  const prevBtn = document.getElementById('btnPrev');
+  const nextBtn = document.getElementById('btnNext');
+
+  // Build flat list of all lessons across all chapters
+  const allLessons = [];
+  chapters.forEach(ch => {
+    ch.lessons.forEach(l => allLessons.push({ ...l, chapId: ch.id }));
+  });
+  const flatIdx = allLessons.findIndex(l => l.slug === lesson.slug);
+
+  const prevLesson = flatIdx > 0 ? allLessons[flatIdx - 1] : null;
+  const nextLesson = flatIdx < allLessons.length - 1 ? allLessons[flatIdx + 1] : null;
+
+  if (prevLesson) {
+    const prevUnlocked = isUnlocked(prevLesson.chapId);
+    const canOpen = prevUnlocked || prevLesson.preview || prevLesson.free;
+    prevBtn.classList.toggle('disabled', !canOpen);
+    if (canOpen) prevBtn.href = `lesson.html?bab=${prevLesson.chapId}&slug=${encodeURIComponent(prevLesson.slug)}&name=${encodeURIComponent(prevLesson.name)}`;
+    document.getElementById('prevName').textContent = prevLesson.name;
+  } else {
+    prevBtn.classList.add('disabled');
+    document.getElementById('prevName').textContent = 'Awal Kursus';
+  }
+
+  if (nextLesson) {
+    const nextUnlocked = isUnlocked(nextLesson.chapId);
+    const canOpen = nextUnlocked || nextLesson.preview || nextLesson.free;
+    nextBtn.classList.toggle('disabled', !canOpen);
+    if (canOpen) nextBtn.href = `lesson.html?bab=${nextLesson.chapId}&slug=${encodeURIComponent(nextLesson.slug)}&name=${encodeURIComponent(nextLesson.name)}`;
+    document.getElementById('nextName').textContent = nextLesson.name;
+  } else {
+    nextBtn.classList.add('disabled');
+    document.getElementById('nextName').textContent = 'Akhir Kursus';
+  }
+}
+
+function renderSidebar(chapter, currentIdx, unlocked) {
+  document.getElementById('sidebarHead').textContent = `BAB ${chapter.id} — Daftar Materi`;
+  const total = chapter.lessons.length;
+  const accessible = chapter.lessons.filter(l => unlocked || l.preview || l.free).length;
+  document.getElementById('progressText').textContent = `${accessible}/${total} terbuka`;
+  document.getElementById('progressFill').style.width = `${(accessible/total)*100}%`;
+
+  document.getElementById('sidebarList').innerHTML = chapter.lessons.map((l, i) => {
+    const canOpen = unlocked || l.preview || l.free;
+    const isActive = i === currentIdx;
+    const href = canOpen ? `lesson.html?bab=${babId}&slug=${encodeURIComponent(l.slug)}&name=${encodeURIComponent(l.name)}` : '#';
+    return `<a class="sidebar-lesson${isActive?' active':''}${!canOpen?' locked':''}" href="${href}">
+      <div class="sidebar-num">${i + 1}</div>
+      <div class="sidebar-lesson-name">${l.name}</div>
+      <span style="font-size:0.8rem;flex-shrink:0">${canOpen ? (isActive ? '▶' : l.type) : '🔒'}</span>
+    </a>`;
+  }).join('');
+}
+
+function downloadFile() {
+  alert('Fitur download akan aktif setelah integrasi platform. File akan tersedia di akun kamu.');
+}
+
+renderPage();
+</script>
+</body>
+</html>

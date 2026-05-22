@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <title>Profile</title>
+
+  <link rel="stylesheet" href="profile.css">
+
+</head>
+<style>
+body{
+
+  margin:0;
+
+  background:#0f172a;
+
+  color:white;
+
+  font-family:sans-serif;
+}
+
+.profile-page{
+
+  max-width:900px;
+
+  margin:auto;
+
+  padding:30px;
+}
+
+.profile-card{
+
+  background:#1e293b;
+
+  padding:30px;
+
+  border-radius:20px;
+
+  text-align:center;
+}
+
+.profile-avatar{
+
+  width:100px;
+  height:100px;
+
+  margin:auto;
+
+  border-radius:50%;
+
+  background:#facc15;
+
+  color:black;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:34px;
+  font-weight:bold;
+}
+
+.logout-btn{
+
+  margin-top:20px;
+
+  padding:12px 20px;
+
+  border:none;
+
+  background:#ef4444;
+
+  color:white;
+
+  border-radius:12px;
+
+  cursor:pointer;
+}
+
+.history-card{
+
+  margin-top:30px;
+
+  background:#1e293b;
+
+  padding:20px;
+
+  border-radius:20px;
+}
+
+.history-item{
+
+  background:#0f172a;
+
+  padding:14px;
+
+  border-radius:12px;
+
+  margin-top:10px;
+}
+</style>
+<body>
+
+  <div class="profile-page">
+
+    <div class="profile-card">
+
+      <div class="profile-avatar"
+        id="avatar">
+
+        V
+
+      </div>
+
+      <h1 id="profileName"></h1>
+
+      <p id="profileEmail"></p>
+
+      <button
+        class="logout-btn"
+        onclick="logout()">
+
+        Logout
+
+      </button>
+
+    </div>
+
+    <div class="history-card">
+
+      <h2>Riwayat Pembelian</h2>
+
+      <div id="historyWrap"></div>
+
+    </div>
+
+  </div>
+
+<script>
+
+const user =
+JSON.parse(localStorage.getItem('user'));
+
+if(!user){
+
+  window.location.href =
+  'Login.html';
+}
+
+document.getElementById('avatar')
+.textContent =
+user.name.charAt(0).toUpperCase();
+
+document.getElementById('profileName')
+.textContent =
+user.name;
+
+document.getElementById('profileEmail')
+.textContent =
+user.email;
+
+const user =
+JSON.parse(localStorage.getItem('user'));
+
+const historyKey =
+`history_${user.email}`;
+
+const history =
+JSON.parse(
+  localStorage.getItem(historyKey)
+  || '[]'
+);
+
+document.getElementById('historyWrap')
+.innerHTML = history.map(item => `
+
+  <div class="history-item">
+
+    <h3>${item.name}</h3>
+
+    <p>${item.price}</p>
+
+  </div>
+
+`).join('');
+
+function logout(){
+
+  localStorage.removeItem('user');
+
+  window.location.href =
+  'index.html';
+}
+
+</script>
+
+</body>
+</html>

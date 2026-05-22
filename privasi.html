@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kebijakan Privasi — Arsitek Sarungan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:wght@700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#f6f3ee;
+  --card:#ffffff;
+  --text:#1f1f1f;
+  --muted:#6f6f6f;
+  --accent:#f0a500;
+  --border:#e8e2d9;
+  --shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+}
+
+/* NAVBAR */
+
+nav{
+  width:100%;
+  padding:18px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(12px);
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid rgba(0,0,0,.05);
+}
+
+.nav-brand{
+  font-size:1.2rem;
+  font-weight:800;
+  text-decoration:none;
+  color:var(--text);
+}
+
+.nav-btn{
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.nav-btn:hover{
+  transform:translateY(-2px);
+}
+
+/* HERO */
+
+.hero{
+  width:100%;
+  padding:90px 7% 60px;
+  text-align:center;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(240,165,0,.12);
+  color:var(--accent);
+  border:1px solid rgba(240,165,0,.2);
+  padding:10px 16px;
+  border-radius:999px;
+  font-size:.9rem;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:3rem;
+  font-family:'Fraunces',serif;
+  margin-bottom:18px;
+  line-height:1.2;
+}
+
+.hero p{
+  max-width:700px;
+  margin:auto;
+  color:var(--muted);
+  font-size:1.05rem;
+}
+
+/* CONTENT */
+
+.container{
+  width:min(900px,92%);
+  margin:auto;
+  margin-bottom:70px;
+}
+
+.policy-card{
+  background:var(--card);
+  border-radius:28px;
+  padding:40px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+
+.policy-section{
+  margin-bottom:35px;
+}
+
+.policy-section:last-child{
+  margin-bottom:0;
+}
+
+.policy-section h2{
+  font-size:1.35rem;
+  margin-bottom:14px;
+  color:var(--text);
+}
+
+.policy-section p{
+  color:var(--muted);
+  margin-bottom:12px;
+}
+
+.policy-section ul{
+  padding-left:20px;
+  color:var(--muted);
+}
+
+.policy-section li{
+  margin-bottom:10px;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  padding:35px 20px;
+  color:var(--muted);
+  font-size:.95rem;
+}
+
+footer a{
+  color:var(--accent);
+  text-decoration:none;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  .hero{
+    padding-top:70px;
+  }
+
+  .hero h1{
+    font-size:2rem;
+  }
+
+  .policy-card{
+    padding:25px;
+    border-radius:22px;
+  }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+  <a href="index.html" class="nav-brand">Arsitek Sarungan</a>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="badge">
+    ✦ Data Protection
+  </div>
+
+  <h1>Kebijakan Privasi</h1>
+
+  <p>
+    Privasi pengguna adalah prioritas kami. Halaman ini menjelaskan bagaimana
+    kami mengumpulkan, menggunakan, dan melindungi data pengguna.
+  </p>
+
+</section>
+
+<!-- CONTENT -->
+
+<div class="container">
+
+  <div class="policy-card">
+
+    <div class="policy-section">
+      <h2>1. Informasi yang Dikumpulkan</h2>
+
+      <p>
+        Kami dapat mengumpulkan beberapa informasi pengguna seperti:
+      </p>
+
+      <ul>
+        <li>Nama lengkap</li>
+        <li>Alamat email</li>
+        <li>Nomor WhatsApp</li>
+        <li>Data transaksi pembayaran</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>2. Penggunaan Informasi</h2>
+
+      <p>
+        Informasi pengguna digunakan untuk:
+      </p>
+
+      <ul>
+        <li>Memproses pembayaran dan akses course</li>
+        <li>Mengirim update materi</li>
+        <li>Memberikan bantuan/support</li>
+        <li>Meningkatkan kualitas layanan</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>3. Keamanan Data</h2>
+
+      <p>
+        Kami berusaha menjaga keamanan data pengguna dengan sistem perlindungan
+        yang layak dan tidak membagikan data pribadi tanpa izin.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>4. Cookies</h2>
+
+      <p>
+        Website dapat menggunakan cookies untuk meningkatkan pengalaman
+        pengguna dan menyimpan preferensi tertentu.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>5. Pembayaran Pihak Ketiga</h2>
+
+      <p>
+        Proses pembayaran dapat dilakukan melalui layanan pihak ketiga seperti
+        gateway pembayaran. Kami tidak menyimpan data kartu kredit pengguna.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>6. Hak Pengguna</h2>
+
+      <p>
+        Pengguna berhak meminta perubahan atau penghapusan data pribadi
+        tertentu sesuai kebutuhan.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>7. Perubahan Kebijakan</h2>
+
+      <p>
+        Kebijakan privasi dapat diperbarui sewaktu-waktu untuk menyesuaikan
+        perubahan layanan dan regulasi.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>8. Kontak</h2>
+
+      <p>
+        Jika ada pertanyaan terkait privasi dan data pengguna,
+        silakan hubungi tim resmi kami.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+  © 2026 Badaggg — All Rights Reserved
+
+  <br><br>
+
+  <a href="kebijakan.html">Kebijakan Layanan</a>
+
+</footer>
+
+</body>
+</html>

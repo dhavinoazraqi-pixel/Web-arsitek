@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Otomatisasi SketchUp 10x — Arsitek Sarungan</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">Arsitek Sarungan</a>
+   <header class="navbar">
+
+  <div id="topRightMenu">  </div>
+</header>
+</nav>
+  
+<div class="hero">
+  <div class="hero-img-wrap">
+    <img src="https://media-myr.b-cdn.net/images/resized/1429/a986dc76-01de-4f90-b942-0cc4554d26ca.webp" alt="Cover">
+    <div class="hero-img-overlay"></div>
+  </div>
+  <span class="badge">✦ Exclusive Course</span>
+  <h1 class="course-title">Otomatisasi SketchUp 10x Lebih Cepat dan Detail</h1>
+  <div class="stats-row">
+    <div class="stat-item">📖 <strong>1</strong>&nbsp;Bacaan</div>
+    <div class="stat-item">🎬 <strong>47</strong>&nbsp;Video</div>
+    <div class="stat-item">📁 <strong>19</strong>&nbsp;File Eksklusif</div>
+    <div class="stat-item">🔒 <strong>11</strong>&nbsp;BAB</div>
+  </div>
+  <div class="buy-section">
+    <div class="harga-lama">Rp.799.000</div>
+    <div class="buy-price-wrap">
+       <h2>Rp 499.000</h2>
+      <p>Akses selamanya Kelas premium</p>
+    </div>
+    <button class="btn-buy" onclick="openPayment('full','Akses Full Course (BAB 1–11)',499000)">🛒 Beli Sekarang</button>
+  </div>
+</div>
+
+<section class="content-section">
+  <h2 class="section-title">Deskripsi</h2>
+  <div class="desc-box">
+    <p><strong>Ini adalah metode yang akan mengubah cara kamu mendesain dengan SketchUp!</strong></p>
+    <p style="margin-top:10px">Tinggalkan cara manual yang menghabiskan waktu dan tenaga. Di sini, kamu akan menguasai workflow otomatis yang cepat, detail, dan belum pernah diajarkan di course atau kelas lain.</p>
+    <h3>Course Ini Cocok Untuk Siapa?</h3>
+    <ul>
+      <li><strong>Praktisi yang sibuk</strong> — yang capek lembur hanya untuk menyelesaikan desain secara manual.</li>
+      <li><strong>Arsitek perorangan</strong> — yang ingin meningkatkan produktivitas dan pendapatan dengan efisiensi tinggi.</li>
+      <li><strong>Pemilik perusahaan</strong> — yang ingin meningkatkan produktivitas tim dan menyelesaikan lebih banyak proyek.</li>
+      <li><strong>Mahasiswa</strong> — yang ingin unggul di antara teman-teman dengan skill desain otomatis.</li>
+    </ul>
+    <h3>Apa yang Akan Kamu Dapatkan?</h3>
+    <ul>
+      <li>Otomatisasi desain yang menghemat 90% waktu mendesain</li>
+      <li>3D model detail hingga generate gambar kerja otomatis</li>
+      <li>Tools premium bernilai jutaan: termasuk file eksklusif</li>
+      <li>Materi lengkap dan praktis yang bisa langsung dipraktikkan</li>
+      <li>Update eksklusif materi baru secara berkala</li>
+    </ul>
+  </div>
+  
+  <h2 class="section-title">Konten Course</h2>
+  <div class="chapters-wrap" id="chaptersWrap"></div>
+
+  <div class="buy-section">
+        <div class="harga-lama">Rp.799.000</div>
+    <div class="buy-price-wrap">
+      <h2>Rp 499.000</h2>
+      <p>Akses selamanya · Update berkala</p>
+    </div>
+    <button class="btn-buy" onclick="openPayment('full','Akses Full Course (BAB 1–11)',499000)">🛒 Beli Sekarang</button>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">Arsitek Sarungan</span>
+  <div style="margin-bottom:10px">
+    <a href="kebijakan.html">Kebijakan Layanan</a> &nbsp;·&nbsp; <a href="privasi.html">Kebijakan Privasi</a>
+  </div>
+  <div>Powered by <strong style="color:var(--accent)">Badaggg.ID</strong></div>
+</footer>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="mainModal">
+    <span class="modal-handle"></span>
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-back" id="modalBack" onclick="goBack()">‹</div>
+        <h2 id="modalTitle">Pilih Pembayaran</h2>
+      </div>
+      <div class="modal-close" onclick="closePayment()">✕</div>
+    </div>
+    <div class="step-bar">
+      <div class="step-dot active" id="sd1"></div>
+      <div class="step-dot" id="sd2"></div>
+      <div class="step-dot" id="sd3"></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div id="step1" class="modal-body">
+      <div class="order-chip">
+        <div class="order-chip-icon">🎓</div>
+        <div class="order-chip-name"><strong id="modalCourseName">Akses Full Course</strong>Otomatisasi SketchUp · Arsitek Sarungan</div>
+        <div class="order-chip-price" id="modalPrice">Rp 499.000</div>
+      </div>
+      <div class="method-section-label">Transfer Bank</div>
+      <div class="method-group">
+        <div class="pay-method has-sub" id="pm-bank" onclick="selectMethod('bank')">
+          <div class="pay-method-row">
+            <div class="pay-method-icon">🏦</div>
+            <div class="pay-method-info"><strong>Transfer Bank</strong><small>BCA · Mandiri · BNI · BRI</small></div>
+            <div class="pay-radio"></div>
+          </div>
+          <div class="sub-methods">
+            <div class="sub-method-grid">
+              <button class="sub-method-btn" onclick="pickBank(event,'bca')"> BCA</button>
+              <button class="sub-method-btn" onclick="pickBank(event,'mandiri')"> Mandiri</button>
+              <button class="sub-method-btn" onclick="pickBank(event,'bni')"> BNI</button>
+              <button class="sub-method-btn" onclick="pickBank(event,'bri')"> BRI</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="method-section-label">Dompet Digital</div>
+      <div class="method-group">
+        <div class="pay-method has-sub" id="pm-qris" onclick="selectMethod('qris')">
+          <div class="pay-method-row">
+            <div class="pay-method-icon">📱</div>
+            <div class="pay-method-info"><strong>QRIS</strong><small>GoPay · OVO · Dana · ShopeePay · LinkAja</small></div>
+            <div class="pay-radio"></div>
+          </div>
+          <div class="sub-methods">
+            <div class="sub-method-grid">
+              <button class="sub-method-btn" onclick="pickWallet(event,'gopay')"> GoPay</button>
+              <button class="sub-method-btn" onclick="pickWallet(event,'ovo')"> OVO</button>
+              <button class="sub-method-btn" onclick="pickWallet(event,'dana')"> Dana</button>
+              <button class="sub-method-btn" onclick="pickWallet(event,'shopeepay')">ShopeePay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="method-section-label">Kartu & Minimarket</div>
+      <div class="method-group">
+        <div class="pay-method" id="pm-card" onclick="selectMethod('card')">
+          <div class="pay-method-icon">💳</div>
+          <div class="pay-method-info"><strong>Kartu Kredit / Debit</strong><small>Visa · Mastercard</small></div>
+          <div class="pay-radio"></div>
+        </div>
+        <div class="pay-method has-sub" id="pm-mart" onclick="selectMethod('mart')">
+          <div class="pay-method-row">
+            <div class="pay-method-icon">🏪</div>
+            <div class="pay-method-info"><strong>Minimarket</strong><small>Alfamart · Indomaret</small></div>
+            <div class="pay-radio"></div>
+          </div>
+          <div class="sub-methods">
+            <div class="sub-method-grid">
+              <button class="sub-method-btn" onclick="pickMart(event,'alfamart')"> Alfamart</button>
+              <button class="sub-method-btn" onclick="pickMart(event,'indomaret')"> Indomaret</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-next-method" id="btnNextMethod" disabled onclick="goStep2()">Lanjutkan →</button>
+      <div class="powered">🔒 Aman · <strong>Badaggg.ID</strong></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2" class="modal-body" style="display:none">
+      <div class="order-chip">
+        <div class="order-chip-icon">🎓</div>
+        <div class="order-chip-name"><strong id="s2CourseName">Akses Full Course</strong>Otomatisasi SketchUp · Arsitek Sarungan</div>
+        <div class="order-chip-price" id="s2Price">Rp 499.000</div>
+      </div>
+      <div class="selected-method-chip">
+        <div class="smc-icon" id="smcIcon">🏦</div>
+        <div class="smc-name" id="smcName">Transfer Bank — BCA</div>
+        <div class="smc-change" onclick="goStep1()">Ganti</div>
+      </div>
+      <label class="input-label">Nama Lengkap *</label>
+      <input class="modal-input" type="text" id="inputNama" placeholder="contoh: Budi Santoso">
+      <label class="input-label">Email *</label>
+      <input class="modal-input" type="email" id="inputEmail" placeholder="email@kamu.com">
+      <label class="input-label">No. WhatsApp *</label>
+      <input class="modal-input" type="tel" id="inputWa" placeholder="08xxxxxxxxxx">
+      <button class="btn-pay" onclick="submitPayment()">Konfirmasi & Bayar →</button>
+      <p class="modal-note">Dengan melanjutkan, kamu menyetujui <a href="#">Kebijakan Layanan</a></p>
+      <div class="powered">🔒 Aman · <strong>BADAGGG.ID</strong></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div id="step3" class="modal-body" style="display:none">
+      <div class="instr-wrap">
+        <div class="instr-timer">
+          <div>
+            <div class="instr-timer-label">⏱ Selesaikan pembayaran dalam</div>
+            <div class="instr-timer-label" id="timerName" style="font-size:0.68rem;margin-top:2px;color:var(--accent)"></div>
+          </div>
+          <div class="instr-timer-count" id="timerCount">14:59</div>
+        </div>
+        <div class="instr-card" id="panelQris" style="display:none">
+          <div class="instr-card-head"><span class="ich-icon">📱</span><span class="ich-title" id="qrisWalletTitle">Scan QR Code</span></div>
+          <div class="instr-card-body">
+            <div class="qr-wrap">
+              <div class="qr-box">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100" height="100" fill="white"/>
+                  <rect x="5" y="5" width="28" height="28" fill="none" stroke="#000" stroke-width="4"/>
+                  <rect x="10" y="10" width="18" height="18" fill="#000"/>
+                  <rect x="67" y="5" width="28" height="28" fill="none" stroke="#000" stroke-width="4"/>
+                  <rect x="72" y="10" width="18" height="18" fill="#000"/>
+                  <rect x="5" y="67" width="28" height="28" fill="none" stroke="#000" stroke-width="4"/>
+                  <rect x="10" y="72" width="18" height="18" fill="#000"/>
+                  <rect x="40" y="5" width="5" height="5" fill="#000"/><rect x="50" y="5" width="5" height="5" fill="#000"/>
+                  <rect x="40" y="15" width="5" height="5" fill="#000"/><rect x="55" y="15" width="5" height="5" fill="#000"/>
+                  <rect x="45" y="25" width="5" height="5" fill="#000"/><rect x="60" y="25" width="5" height="5" fill="#000"/>
+                  <rect x="5" y="40" width="5" height="5" fill="#000"/><rect x="15" y="40" width="5" height="5" fill="#000"/>
+                  <rect x="40" y="40" width="5" height="5" fill="#000"/><rect x="55" y="40" width="5" height="5" fill="#000"/>
+                  <rect x="70" y="40" width="5" height="5" fill="#000"/><rect x="85" y="40" width="5" height="5" fill="#000"/>
+                  <rect x="5" y="50" width="5" height="5" fill="#000"/><rect x="35" y="50" width="5" height="5" fill="#000"/>
+                  <rect x="55" y="50" width="5" height="5" fill="#000"/><rect x="80" y="50" width="5" height="5" fill="#000"/>
+                  <rect x="10" y="60" width="5" height="5" fill="#000"/><rect x="40" y="60" width="5" height="5" fill="#000"/>
+                  <rect x="70" y="60" width="5" height="5" fill="#000"/><rect x="90" y="60" width="5" height="5" fill="#000"/>
+                  <rect x="42" y="42" width="16" height="16" rx="3" fill="#f0a500"/>
+                  <text x="50" y="53" text-anchor="middle" font-size="9" fill="white" font-weight="bold">AS</text>
+                </svg>
+              </div>
+              <div class="qr-amount" id="qrisAmount">Rp 499.000</div>
+              <div class="qr-note">Buka aplikasi e-wallet kamu, pilih <strong>Bayar/Scan QR</strong>, lalu scan kode di atas</div>
+            </div>
+          </div>
+        </div>
+        <div class="instr-card" id="panelBank" style="display:none">
+          <div class="instr-card-head"><span class="ich-icon">🏦</span><span class="ich-title">Instruksi Transfer Bank</span></div>
+          <div class="instr-card-body">
+            <div class="bank-tabs" id="bankTabs"></div>
+            <div id="bankDetails"></div>
+          </div>
+        </div>
+        <div class="instr-card" id="panelCard" style="display:none">
+          <div class="instr-card-head"><span class="ich-icon">💳</span><span class="ich-title">Kartu Kredit / Debit</span></div>
+          <div class="instr-card-body">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <input class="modal-input" style="margin:0" type="text" id="cardNum" placeholder="Nomor Kartu (16 digit)" maxlength="19" oninput="fmtCard(this)">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <input class="modal-input" style="margin:0" type="text" id="cardExp" placeholder="MM/YY" maxlength="5" oninput="fmtExp(this)">
+                <input class="modal-input" style="margin:0" type="text" id="cardCvv" placeholder="CVV" maxlength="3">
+              </div>
+              <input class="modal-input" style="margin:0" type="text" id="cardName" placeholder="Nama di kartu">
+            </div>
+          </div>
+        </div>
+        <div class="instr-card" id="panelMart" style="display:none">
+          <div class="instr-card-head"><span class="ich-icon">🏪</span><span class="ich-title" id="martTitle">Alfamart</span></div>
+          <div class="instr-card-body">
+            <div class="mart-code-box">
+              <div class="mart-code" id="martCode">4832-7651-9204</div>
+              <div class="mart-code-label">Kode Pembayaran · Tunjukkan ke kasir</div>
+            </div>
+            <ul class="mart-steps">
+              <li><span class="ms-num">1</span><span>Kunjungi kasir <span id="martBrand">Alfamart</span> terdekat</span></li>
+              <li><span class="ms-num">2</span><span>Beritahu kasir kamu ingin bayar "Mayar" atau "Virtual Account"</span></li>
+              <li><span class="ms-num">3</span><span>Tunjukkan kode di atas dan bayar <strong id="martAmount">Rp 499.000</strong></span></li>
+              <li><span class="ms-num">4</span><span>Simpan struk sebagai bukti pembayaran</span></li>
+            </ul>
+          </div>
+        </div>
+        <button class="btn-confirm-pay" onclick="confirmPayment()">✅ Saya Sudah Bayar</button>
+        <p class="modal-note">Akses kelas akan terbuka otomatis setelah pembayaran dikonfirmasi</p>
+        <div class="powered">🔒 Aman · <strong>Badaggg.ID</strong></div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div id="step4" class="modal-body" style="display:none">
+      <div class="verify-wrap">
+        <div class="verify-spinner"></div>
+        <h3>Mengecek Pembayaran...</h3>
+        <p>Mohon tunggu, kami sedang memverifikasi pembayaranmu</p>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div id="step5" class="modal-body" style="display:none">
+      <div class="success-wrap">
+        <div class="success-anim">✅</div>
+        <h2>Pembayaran Berhasil!</h2>
+        <p id="successMsg">Akses kelas telah dibuka. Selamat belajar!</p>
+        <div class="unlocked-babs" id="unlockedTags"></div>
+        <button class="btn-close-success" onclick="closePayment()">🎓 Mulai Belajar Sekarang</button>
+        <div class="powered" style="margin-top:14px">🔒 Aman · <strong>Badaggg.ID</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+<script src="script.js"></script>
+  
+</body>
+</html>
